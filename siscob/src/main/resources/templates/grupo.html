@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>	
+        
+    <title>Grupo</title>
+
+    <div th:replace="fragments/header :: header-css"/>
+
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"/>
+
+<div th:replace="fragments/menu :: menu"/>
+
+
+<section class="main-content container">
+
+
+
+            <!--page header start-->
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h4>Grupo</h4>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <ol class="breadcrumb">
+                            <li><a href="javascript: void(0);"><i class="fa fa-home"></i></a></li>
+                            <li>E-commerce</li>
+                            <li>Products</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <!--page header end-->
+
+
+            <!--start page content-->
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                                <table id="datatable1" class="table table-striped dt-responsive nowrap table-hover">
+                                   
+                                  </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--end page content-->
+
+
+            <!--Start footer-->
+            <footer class="footer">
+                <span>Copyright &copy; 2017. Float</span>
+            </footer>
+            <!--end footer-->
+            
+            
+            
+            <script>
+            $(document).ready(function () {
+               
+            	
+            	$('#datatable1').bootstrapTable({
+            	   	url: 'http://localhost:8085/catgrupo',
+            	    //url: 'data.json',
+            	    columns: [
+            	    	{
+	            	        field: 'idGruIn',
+	            	        title: 'ID'
+            	    	}, 
+            	    	{
+	            	        field: 'desNomVc',
+	            	        title: 'Descripcion'
+	            	    }, 
+	            	    {
+	            	        field: 'flgEstBo',
+	            	        title: 'Estado'
+	            	    } 
+            	    ]
+            	});
+                
+            	$('#datatable1').dataTable();
+            });
+        </script>
+
+        </section>
+
+
+</body>
+</html>
