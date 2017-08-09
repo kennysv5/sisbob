@@ -8,8 +8,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/mantenimiento")
 public class MantenimientoController {
 	
-	@GetMapping("/grupo")
+	@GetMapping("/grupo/list")
 	public String grupo() {
 		return "grupo";
 	}
+	
+	@GetMapping("/grupos/add")
+	public String verFormGrupo() {
+		return "addgrupo";
+	}
+	
+	
 }

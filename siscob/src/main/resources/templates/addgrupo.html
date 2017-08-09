@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>	
+        
+    <title>Grupo</title>
+
+    <div th:replace="fragments/header :: header-css"/>
+
+</head>
+<body>
+
+<div th:replace="fragments/header :: header"/>
+
+<div th:replace="fragments/menu :: menu"/>
+
+
+<section class="main-content container">
+
+
+
+            <!--page header start-->
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h4>Grupo</h4>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <ol class="breadcrumb">
+                            <li><a href="javascript: void(0);"><i class="fa fa-home"></i></a></li>
+                            <li>E-commerce</li>
+                            <li>Products</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <!--page header end-->
+
+
+            <!--start page content-->
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <!-- START panel-->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Registrar</div>
+                        <div class="panel-body">
+                            <form role="form" id="ajaxForm"  method="POST">
+                                <div class="form-group">
+                                    <label>Descripcion</label>
+                                    <input type="text"  name="desNomVc" id="desNomVc" placeholder="descripcion del grupo" class="form-control"/>
+                                </div>
+                                <button type="submit" class="btn btn-sm btn-primary" id="sendGuardar">Guardar</button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- END panel-->
+                </div>
+            </div>
+
+            <!--end page content-->
+
+
+            
+
+        </section>
+        
+        
+        <!--Start footer-->
+            <footer class="footer">
+                <span>Copyright &copy; 2017. Float</span>
+            </footer>
+            <!--end footer-->
+            
+            
+            
+            <script>
+            $(document).ready(function () {
+            	
+            	function ajaxCallRequest(f_method, f_url, f_data) {
+            	    //$("#dataSent").val(unescape(f_data));
+            	    var f_contentType = 'application/x-www-form-urlencoded; charset=UTF-8';
+            	    $.ajax({
+            	      url: f_url,
+            	      type: f_method,
+            	      contentType: f_contentType,
+            	      dataType: 'json',
+            	      data: f_data,
+            	      success: function(data) {
+            	        var jsonResult = JSON.stringify(data);
+            	        $("#results").val(unescape(jsonResult));
+            	      }
+            	    });
+            	  }
+            	
+            	  $("#sendGuardar").click(function(event) {
+            		    event.preventDefault();
+            		    
+            		    var form = $('#ajaxForm');
+            		    var method = form.attr('method');
+            		    var url = 'http://localhost:8085/catgrupo';
+            		    var jsonData = $(form).serializeObject();
+            		    console.log(jsonData);
+            		    ajaxCallRequest(method, url, jsonData);
+            		  });
+            });
+        </script>
+
+
+</body>
+</html>
