@@ -598,27 +598,10 @@
         <script src="plugins/datatables/dataTables.responsive.min.js"></script>
         <script>
             $(document).ready(function () {
-                /*$.getJSON("data.json",function(data){
-            		var items = [];
-            		$.each(data, function(key,val){
-            			            			
-            			items.push("<tr>");
-            			items.push("<tr id=''"+key+"''>"+val.id+"</td>");
-            			items.push("<tr id=''"+key+"''>"+val.name+"</td>");
-            			items.push("<tr id=''"+key+"''>"+val.email+"</td>");
-            			items.push("<tr id=''"+key+"''>"+val.phone+"</td>");
-            			items.push("<tr id=''"+key+"''>"+val.address.street+"</td>");
-            			items.push("<tr id=''"+key+"''>"+val.address.city+"</td>");
-            			items.push("<tr id=''"+key+"''>"+val.address.state+"</td>");
-            			items.push("</tr>");
-            		});
-            		
-            		$("<tbody/>",{html:items.join('')}).appendTo("datatable1");
-            	});*/
-            	
+               
             	$('#datatable1').bootstrapTable({
-            	    //url: 'http://localhost:8085/proveedor',
-            	    url: 'data.json',
+            	    url: 'http://localhost:8085/proveedor',
+            	    //url: 'data.json',
             	    columns: [
             	    	{
 	            	        field: 'idProvIn',

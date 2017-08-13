@@ -42,8 +42,8 @@ public class CatGrupoController{
         return catGrupos;
     }
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> post(@RequestBody CatGrupo catGrupo, UriComponentsBuilder ucBuilder){
+    public @ResponseBody CatGrupo post(@RequestBody CatGrupo catGrupo, UriComponentsBuilder ucBuilder){
         catGrupoService.add(catGrupo);
-        return null;
+        return catGrupo;
     }
 }

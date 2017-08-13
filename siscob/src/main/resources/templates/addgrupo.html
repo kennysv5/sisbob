@@ -35,31 +35,67 @@
             </div>
             <!--page header end-->
 
-
-            <!--start page content-->
-
+			<div class="row">
+			
+                <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form role="form" class="form-inline">
+                            <div class="form-group">
+                            	<input type="button" id="btnBuscar" class="btn btn-danger" value="BUSCAR"/>
+                            </div>
+                            <div class="form-group">
+                                <input type="button" class="btn btn-primary" data-toggle="modal" data-target=".pop-up-grupo"  value="NUEVO"/>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <!--start page content-->            
             <div class="row">
-                <div class="col-sm-6">
-                    <!-- START panel-->
+                <div class="col-md-12">
                     <div class="panel panel-default">
-                        <div class="panel-heading">Registrar</div>
                         <div class="panel-body">
-                            <form role="form" id="ajaxForm"  method="POST">
-                                <div class="form-group">
-                                    <label>Descripcion</label>
-                                    <input type="text"  name="desNomVc" id="desNomVc" placeholder="descripcion del grupo" class="form-control"/>
-                                </div>
-                                <button type="submit" class="btn btn-sm btn-primary" id="sendGuardar">Guardar</button>
-                            </form>
+	                         <table id="dtLista" class="table table-striped dt-responsive nowrap table-hover">
+	                         	<thead>
+	                         		<tr>
+	                         			<th>ID</th>
+	                         			<th>Nombre</th>
+	                         			<th>Estado</th>
+	                         		</tr>
+	                         	</thead>
+	                         	<tbody></tbody>
+	                         </table>
                         </div>
                     </div>
-                    <!-- END panel-->
                 </div>
             </div>
 
             <!--end page content-->
 
-
+			<div class="modal fade pop-up-grupo" tabindex="-1" role="dialog" aria-labelledby="pop-up-grupo">
+	            <div class="modal-dialog" role="document">
+	                <div class="modal-content">
+	                    <div class="modal-header">
+	                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="fa fa-times-circle"></span></button>
+	                        <h4 class="modal-title" id="pop-up-grupo">Registrar</h4>
+	                    </div>
+	                    <div class="modal-body">
+	                    	<form role="form" id="ajaxForm"  method="POST">
+                                <div class="form-group">
+                                    <label>Descripcion</label>
+                                    <input type="text"  name="desNomVc" id="desNomVc" placeholder="descripcion del grupo" class="form-control"/>
+                                </div>
+                            </form>
+	                    </div>
+	                    <div class="modal-footer">
+	                        <button type="button" class="btn btn-default" data-dismiss="modal">CANCELAR</button>
+	                        <button type="button" id="btnGuardar" class="btn btn-primary">GUARDAR</button>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
             
 
         </section>
@@ -74,35 +110,53 @@
             
             
             <script>
-            $(document).ready(function () {
+            var table = null;
+            
+            $(document).ready(function () {            	
+            	$("#btnGuardar").click(guardar);
+            	$("#btnBuscar").click(listar);
             	
-            	function ajaxCallRequest(f_method, f_url, f_data) {
-            	    //$("#dataSent").val(unescape(f_data));
-            	    var f_contentType = 'application/x-www-form-urlencoded; charset=UTF-8';
-            	    $.ajax({
-            	      url: f_url,
-            	      type: f_method,
-            	      contentType: f_contentType,
-            	      dataType: 'json',
-            	      data: f_data,
-            	      success: function(data) {
-            	        var jsonResult = JSON.stringify(data);
-            	        $("#results").val(unescape(jsonResult));
-            	      }
-            	    });
-            	  }
-            	
-            	  $("#sendGuardar").click(function(event) {
-            		    event.preventDefault();
-            		    
-            		    var form = $('#ajaxForm');
-            		    var method = form.attr('method');
-            		    var url = 'http://localhost:8085/catgrupo';
-            		    var jsonData = $(form).serializeObject();
-            		    console.log(jsonData);
-            		    ajaxCallRequest(method, url, jsonData);
-            		  });
+            	table = $('#dtLista').DataTable();            	
             });
+            
+            function guardar(){
+            	var object=new Object();
+    		    object.desNomVc=$("#desNomVc").val();
+    		    $.ajax({
+    		        url: 'http://localhost:8085/catgrupo',
+    		        data: JSON.stringify(object),
+    		        dataType: 'JSON',
+    		        type: 'POST',
+    		        contentType: "application/json; charset=utf-8",
+    		        success: function (jsondata) {
+    		        	$(".pop-up-grupo").modal("hide");
+    		        	listar();
+    		        	swal("Mensaje", "Registro ingresado correctamente", "success");
+    		        }
+    		    });
+            }
+            
+            
+            function listar(){
+    		    $.ajax({
+    		        url: 'http://localhost:8085/catgrupo',
+    		        dataType: 'JSON',
+    		        type: 'GET',
+    		        contentType: "application/json; charset=utf-8",
+    		        success: function (jsondata) {
+    		            //console.table(jsondata);
+    		            $.each(jsondata, function(i,obj){
+    		            	var rowNode=table.row.add(
+    		            	[
+    		            		(i+1),
+    		            		obj.desNomVc,
+    		            		obj.flgEstBo
+    		            	]		
+    		            	).draw();
+    		            });
+    		        }
+    		    });
+            }
         </script>
 
 
